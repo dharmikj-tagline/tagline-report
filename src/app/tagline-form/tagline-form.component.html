@@ -6,86 +6,174 @@
 <div class="reportForm">
     <div class="row">
         <div class="col-md-6 p-5">
-            <div class="row fs-5">
+            <div class="row fs-5 px-5">
                 <form [formGroup]="reportForm">
                     <div class="form-row row mb-4">
                         <div class="form-group col-md-5">
                             <label for="inputEmail4 ">Client Name</label>
                             <input type="text" class="form-control mt-2" mt-2id="inputEmail4"
-                                placeholder="Enter Client Name" formControlName="clientName" [(ngModel)]="clientDetail">
+                                placeholder="Enter Client Name" formControlName="clientName">
                         </div>
                         <div class="form-group col-md-5">
                             <label for="inputPassword4">Project Name</label>
                             <input type="text" class="form-control mt-2" id="inputPassword4"
-                                placeholder="Enter Project Name" formControlName="projectName"
-                                [(ngModel)]="projectDetail">
+                                placeholder="Enter Project Name" formControlName="projectName">
                         </div>
                     </div>
-                    <div class="form-group col-md-10 mb-4">
-                        <label for="inputAddress">List of Completed Tasks :</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-3 mt-2" id="inputAddress"
-                                placeholder="Completed Tasks" formControlName="completedTask"
-                                [(ngModel)]="completedDetail">
-                            <button class="btn">+</button>
+
+                    <div class="form-group col-md-10 mb-4" formArrayName="completedTask">
+                        <label for="completedTask">List of Completed Tasks :</label>
+
+                        <div *ngFor="let task of completedTask.controls; let i=index"
+                            class="d-flex justify-content-center col-12 mt-3">
+                            <input type="text" class="form-control me-3 " placeholder="Completed Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeCompletedTask(i)"
+                                [ngStyle]="{'display': completedTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addCompletedTask($event)"
+                                [ngStyle]="{'display': completedTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+
                     </div>
-                    <div class="form-group col-md-10 mb-4">
-                        <label for="inputAddress">List of In-Progress Tasks :</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-3 mt-2" id="inputAddress"
-                                placeholder="In-Progress Tasks" formControlName="progressTask"
-                                [(ngModel)]="progressDetail">
-                            <button class="btn">+</button>
+
+
+                    <div class="form-group col-md-10 mb-4" formArrayName="progressTask">
+                        <label for="completedTask">List of In-Progress Tasks :</label>
+
+                        <div *ngFor="let task of progressTask.controls; let i=index"
+                            class="d-flex justify-content-center col-12 mt-3">
+                            <input type="text" class="form-control me-3 " placeholder="Completed Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeProgressTask(i)"
+                                [ngStyle]="{'display': progressTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addProgressTask($event)"
+                                [ngStyle]="{'display': completedTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+
                     </div>
-                    <div class="form-group col-md-10 mb-4">
-                        <label for="inputAddress">List of Pending Tasks :</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-3 mt-2" id="inputAddress"
-                                placeholder="Pending Tasks" formControlName="pendingTask" [(ngModel)]="pendingDetail">
-                            <button class="btn">+</button>
+
+                    <div class="form-group col-md-10 mb-4" formArrayName="pendingTask">
+                        <label for="pendingTask">List of Pending Tasks :</label>
+
+                        <div *ngFor="let task of pendingTask.controls; let i=index"
+                            class="d-flex justify-content-center col-12 mt-3">
+                            <input type="text" class="form-control me-3 " placeholder="Pending Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removePendingTask(i)"
+                                [ngStyle]="{'display': pendingTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addPendingTask($event)"
+                                [ngStyle]="{'display': pendingTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+
                     </div>
-                    <div class="form-group col-md-10 mb-4">
-                        <label for="inputAddress">Queries :</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-3 mt-2" id="inputAddress" placeholder="Queries"
-                                formControlName="queires" [(ngModel)]="queireDetail">
-                            <button class="btn">+</button>
+
+                    <div class="form-group col-md-10 mb-4" formArrayName="queires">
+                        <label for="queires">Queries :</label>
+
+                        <div *ngFor="let task of queires.controls; let i=index"
+                            class="d-flex justify-content-center col-12 mt-3">
+                            <input type="text" class="form-control me-3 " placeholder="Queries" [formControlName]="i"
+                                minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeQueiresTask(i)"
+                                [ngStyle]="{'display': queires.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addQueiresTask($event)"
+                                [ngStyle]="{'display': queires.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+
                     </div>
-                    <div class="form-group col-md-10 mb-4">
-                        <label for="inputAddress">Notes :</label>
-                        <div class="d-flex">
-                            <input type="text" class="form-control me-3 mt-2" id="inputAddress" placeholder="Notes"
-                                formControlName="notes" [(ngModel)]="noteDetail">
-                            <button class="btn">+</button>
+
+                    <div class="form-group col-md-10 mb-4" formArrayName="notes">
+                        <label for="notes">Notes :</label>
+
+                        <div *ngFor="let task of notes.controls; let i=index"
+                            class="d-flex justify-content-center col-12 mt-3">
+                            <input type="text" class="form-control me-3 " placeholder="Notes" [formControlName]="i"
+                                minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeNotesTask(i)"
+                                [ngStyle]="{'display': notes.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addNotesTask($event)"
+                                [ngStyle]="{'display': notes.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+
                     </div>
+
+
                     <div class="form-group col-md-10 mb-4">
                         <label for="inputAddress">Your Name :</label>
                         <input type="text" class="form-control me-3 mt-2" id="inputAddress"
-                            placeholder="Enter Client Name" formControlName="yourName" [(ngModel)]="nameDetail">
+                            placeholder="Enter Client Name" formControlName="yourName">
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                <p>Hi , {{ clientDetail }}</p>
-                <p>Following are the updates for {{ projectDetail }} as on 13 January, 2023 </p>
-                <div>
-                    <h3>{{listCompletedTask}}</h3>
-                    <div>
-                        {{ completedDetail }} <b> {{ done }}</b>
+
+        <div class="col-md-6 p-5">
+            <div class="row content">
+                <p>Hi, {{ clientName.value }}</p>
+
+                <p>Following are the updates for {{ projectName.value }} as on {{Date}} {{Month}} {{Year}} </p>
+
+                <div class="p-3">
+                    <h5>{{listCompletedTask}}</h5>
+                    <div *ngFor="let content of completedTask.value;let i=index" class="d-flex">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ completedTask.value[i] }} &nbsp; <b> {{ done }}</b>
                     </div>
                 </div>
-                <p>{{ progressDetail }}</p>
-                <p>{{ pendingDetail }}</p>
-                <p>{{ queireDetail }}</p>
-                <p>{{ noteDetail }}</p>
-                <p>{{ nameDetail }}</p>
+
+                <div class="p-3">
+                    <h5>{{listProgressTask}}</h5>
+                    <div *ngFor="let content of progressTask.value;let i=index" class="d-flex">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ progressTask.value[i] }} &nbsp; <b> {{ done }}</b>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <h5>{{listPendingTask}}</h5>
+                    <div *ngFor="let content of pendingTask.value;let i=index" class="d-flex">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ pendingTask.value[i] }} &nbsp; <b> {{ done }}</b>
+                    </div>
+                </div>
+
+                <div>
+                    <h5>{{listQuiresTask}}</h5>
+                    <div *ngFor="let content of queires.value;let i=index" class="d-flex">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ queires.value[i] }} &nbsp; <b> {{ done }}</b>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <h5>{{listNotesTask}}</h5>
+                    <div *ngFor="let content of notes.value;let i=index" class="d-flex">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ notes.value[i] }} &nbsp; <b> {{ done }}</b>
+                    </div>
+                </div>
+
+
+                <p>
+                    {{thanks}}<br>
+                    <b>{{ yourName.value }}</b>
+                </p>
+
             </div>
 
         </div>

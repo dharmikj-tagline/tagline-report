@@ -14,3 +14,13 @@ button:hover{
     background-color: #DA6427;
     color: white;
 }
+
+.content p{
+    font-size: 20px;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #da63279c;
+  color: white;
+}
