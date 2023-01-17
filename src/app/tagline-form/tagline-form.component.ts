@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-tagline-form',
@@ -7,23 +13,37 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./tagline-form.component.scss'],
 })
 export class TaglineFormComponent implements OnInit {
-
   reportForm!: FormGroup;
-  
-  done: string='[Done]';
-  array : any 
-  months : string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  fullDate : any = new Date();
-  Date : string =this.fullDate.getDate();
-  Month : string = this.months[this.fullDate.getMonth()];
-  Year : string =this.fullDate.getFullYear();
-   
-  listCompletedTask : string='List of completed tasks:';
-  listProgressTask : string = 'List of Progress tasks:';
-  listPendingTask : string = 'List of Pending tasks:';
-  listQuiresTask : string = 'Queires :';
-  listNotesTask : string = 'Notes : ';
-  thanks : string = 'Thanks,';
+
+  months: string[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  fullDate: any = new Date();
+  Date: string = this.fullDate.getDate();
+  Month: string = this.months[this.fullDate.getMonth()];
+  Year: string = this.fullDate.getFullYear();
+
+  listCompletedTask: string = 'List of completed tasks:';
+  listProgressTask: string = 'List of Progress tasks:';
+  listPendingTask: string = 'List of Pending tasks:';
+  listQuiresTask: string = 'Queires :';
+  listNotesTask: string = 'Notes : ';
+  checkUpdate: string =
+    'Please check with the latest updates and let us know your thoughts for the same.';
+  done: string = '[Done]';
+  thanks: string = 'Thanks,';
+  submitted = false;
 
   constructor(private fb: FormBuilder) {}
 
@@ -31,114 +51,68 @@ export class TaglineFormComponent implements OnInit {
     this.reportForm = this.fb.group({
       clientName: [''],
       projectName: [''],
-      completedTask: this.fb.array([
-        this.fb.control('')
-      ]),
-      progressTask: this.fb.array([
-        this.fb.control('')
-      ]),
-      pendingTask: this.fb.array([
-        this.fb.control('')
-      ]),
-      queires: this.fb.array([
-        this.fb.control('')
-      ]),
-      notes: this.fb.array([
-        this.fb.control('')
-      ]),
+      completedTask: this.fb.array([this.formControl()]),
+      progressTask: this.fb.array([this.formControl()]),
+      pendingTask: this.fb.array([this.formControl()]),
+      queires: this.fb.array([this.formControl()]),
+      notes: this.fb.array([this.formControl()]),
       yourName: [''],
     });
   }
 
-  get clientName(){
-    return this.reportForm.get('clientName') as FormControl;
-  }
-
-  get projectName(){
-    return this.reportForm.get('projectName') as FormControl;
-  }
-
-  get completedTask(){
-    return this.reportForm.get('completedTask') as FormArray;
-  }
-
-  get progressTask(){
-    return this.reportForm.get('progressTask') as FormArray;
-  }
-
-  get pendingTask(){
-    return this.reportForm.get('pendingTask') as FormArray;
-  }
-
-  get queires(){
-    return this.reportForm.get('queires') as FormArray;
-  }
-
-  get notes(){
-    return this.reportForm.get('notes') as FormArray;
-  }
-
-  get yourName(){
-    return this.reportForm.get('yourName') as FormControl;
-  }
-
-  get formControls(){
+  get formControls() {
     return this.reportForm.controls;
   }
 
-  
-
-  addCompletedTask(event: any) {
-    let completedTaskArr= this.reportForm.get('completedTask') as FormArray;
-    completedTaskArr.push(this.fb.control(event.target.value));
+  get completedTask() {
+    return this.reportForm.get('completedTask') as FormArray;
   }
 
-  addTask(event: any , array : any, getValue : any) {
-    array= this.reportForm.get('getValue') as FormArray;
-    array.push(this.fb.control(event.target.value));
+  get progressTask() {
+    return this.reportForm.get('progressTask') as FormArray;
   }
 
-  addProgressTask(event: any) {
-    let progressTaskArr= this.reportForm.get('progressTask') as FormArray;
-    progressTaskArr.push(this.fb.control(event.target.value));
+  get pendingTask() {
+    return this.reportForm.get('pendingTask') as FormArray;
   }
 
-  addPendingTask(event: any) {
-    let pendingTaskArr= this.reportForm.get('pendingTask') as FormArray;
-    pendingTaskArr.push(this.fb.control(event.target.value));
+  get queires() {
+    return this.reportForm.get('queires') as FormArray;
   }
 
-  addQueiresTask(event: any) {
-    let queiresArr= this.reportForm.get('queires') as FormArray;
-    queiresArr.push(this.fb.control(event.target.value));
+  get notes() {
+    return this.reportForm.get('notes') as FormArray;
   }
 
-  addNotesTask(event: any) {
-    let notesArr= this.reportForm.get('notes') as FormArray;
-    notesArr.push(this.fb.control(event.target.value));
+  addFormControl(formArray: string) {
+    console.log('formArray :>> ', formArray);
+    this.submitted = true;
+    switch (formArray) {
+      case 'completedTask':
+        this.completedTask.valid && this.completedTask.push(this.formControl());
+        break;
+      case 'progressTask':
+        this.progressTask.valid && this.progressTask.push(this.formControl());
+        break;
+      case 'pendingTask':
+        this.pendingTask.valid && this.pendingTask.push(this.formControl());
+        break;
+      case 'queires':
+        this.queires.valid && this.queires.push(this.formControl());
+        break;
+      case 'notes':
+        this.notes.valid && this.notes.push(this.formControl());
+        break;
+      default:
+        break;
+    }
   }
 
-
-  removeCompletedTask(i: number) {
-    this.completedTask.removeAt(i);
+  formControl() {
+    return this.fb.control(null, [Validators.required]);
   }
 
-  removeProgressTask(i: number) {
-    this.progressTask.removeAt(i);
+  removeTask(i: number, array: any) {
+    array.removeAt(i);
   }
-
-  removePendingTask(i: number) {
-    this.pendingTask.removeAt(i);
-  }
-
-  removeQueiresTask(i: number) {
-    this.queires.removeAt(i);
-  }
-
-  removeNotesTask(i: number) {
-    this.notes.removeAt(i);
-  }
-
-  
-
 }
