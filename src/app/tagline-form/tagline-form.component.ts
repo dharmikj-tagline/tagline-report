@@ -34,15 +34,18 @@ export class TaglineFormComponent implements OnInit {
   Month: string = this.months[this.fullDate.getMonth()];
   Year: string = this.fullDate.getFullYear();
 
+  lblClientName : string = 'Client Name';
+  lblProjectName : string = 'Project Name';
   listCompletedTask: string = 'List of completed tasks:';
   listProgressTask: string = 'List of Progress tasks:';
   listPendingTask: string = 'List of Pending tasks:';
-  listQuiresTask: string = 'Queires :';
-  listNotesTask: string = 'Notes : ';
+  listQuires: string = 'Queires :';
+  listNotes: string = 'Notes : ';
   checkUpdate: string =
     'Please check with the latest updates and let us know your thoughts for the same.';
   done: string = '[Done]';
   thanks: string = 'Thanks,';
+  err !:string;
   submitted = false;
 
   constructor(private fb: FormBuilder) {}
