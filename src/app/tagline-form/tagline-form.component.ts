@@ -45,16 +45,13 @@ export class TaglineFormComponent implements OnInit {
     'Please check with the latest updates and let us know your thoughts for the same.';
   done: string = '[Done]';
   thanks: string = 'Thanks,';
-  err!:string;
   errmsg : string='Please fill this first';
+  err : string='';
   completederr!: string;
   progresserr!: string;
   pendingerr!: string;
   queireserr!: string;
   noteserr!: string;
-
-  submitted = false;
-  longStringToCopy!:string;
 
   constructor(private fb: FormBuilder) {}
 
@@ -95,11 +92,14 @@ export class TaglineFormComponent implements OnInit {
     return this.reportForm.get('notes') as FormArray;
   }
 
+  formControl(){
+    return this.fb.control(null, [Validators.required]);
+  }
+
   addFormControl(formArray: string) {
-    this.submitted = true;
     switch (formArray) {
       case 'completedTask':
-        this.completedTask.valid && this.completedTask.push(this.formControl());
+        this.completedTask.valid &&  this.completedTask.push(this.formControl());
         this.completedTask.invalid && (this.completederr = this.errmsg);
         break;
       case 'progressTask':
@@ -123,12 +123,8 @@ export class TaglineFormComponent implements OnInit {
     }
   }
 
-  formControl() {
-    return this.fb.control(null, [Validators.required]);
-  }
-
   removeTask(i: number, array: any) {
-    array.removeAt(i);
+    array.removeAt(i);     
   }
 
   copyText(){
@@ -139,7 +135,6 @@ export class TaglineFormComponent implements OnInit {
   }
 
   copyMsg(){
-    
       var tooltip = document.getElementById("myTooltip") as HTMLSpanElement;
       tooltip.innerHTML = "";
   }

@@ -35,9 +35,7 @@
                                 [ngStyle]="{'display': completedTask.length == 5 ? 'none' : 'inline'}"><i
                                     class="fa-solid fa-plus"></i></button>
                         </div>
-                        <span class="fs-6 text-danger" *ngIf="formControls['completedTask'].invalid">
-                            {{ completederr}}
-                        </span>
+                        <span class="fs-6 text-danger" *ngIf="task.invalid">{{ completederr }}</span>
                     </div>
                 </div>
 
@@ -55,7 +53,7 @@
                                 [ngStyle]="{'display': progressTask.length == 5 ? 'none' : 'inline'}"><i
                                     class="fa-solid fa-plus"></i></button>
                         </div>
-                        <span class="fs-6 text-danger" *ngIf=" formControls['progressTask'].invalid">
+                        <span class="fs-6 text-danger" *ngIf="task.invalid">
                             {{ progresserr}}
                         </span>
                     </div>
@@ -75,7 +73,7 @@
                                 [ngStyle]="{'display': pendingTask.length == 5 ? 'none' : 'inline'}"><i
                                     class="fa-solid fa-plus"></i></button>
                         </div>
-                        <span class="fs-6 text-danger" *ngIf="formControls['pendingTask'].invalid && formControls['pendingTask'].dirty">
+                        <span class="fs-6 text-danger" *ngIf="task.invalid">
                             {{ pendingerr}}
                         </span>
                     </div>
@@ -95,7 +93,7 @@
                                 [ngStyle]="{'display': queires.length == 5 ? 'none' : 'inline'}"><i
                                     class="fa-solid fa-plus"></i></button>
                         </div>
-                        <span class="fs-6 text-danger" *ngIf=" formControls['queires'].invalid">
+                        <span class="fs-6 text-danger" *ngIf="task.invalid">
                             {{ queireserr}}
                         </span>
 
@@ -116,14 +114,13 @@
                                 [ngStyle]="{'display': notes.length == 5 ? 'none' : 'inline'}"><i
                                     class="fa-solid fa-plus"></i></button>
                         </div>
-                        <span class="fs-6 text-danger" *ngIf="formControls['notes'].invalid">
+                        <span class="fs-6 text-danger" *ngIf="task.invalid">
                             {{ noteserr}}
                         </span>
                     </div>
                 </div>
 
-
-                <div class="form-group col-md-10 mb-2">
+                <div class="form-group col-md-10 mb-4">
                     <label for="inputAddress" class="fs-6">Your Name :</label>
                     <input type="text" class="form-control me-3 mt-2" id="inputAddress" placeholder="Enter Client Name"
                         formControlName="yourName">
@@ -135,8 +132,9 @@
     <div class="col-lg-6 p-5">
         <div class="d-flex justify-content-between py-2 col-md-9" *ngIf="formControls['projectName'].dirty">
             <h5>Updates for as on {{Date}} {{Month}}, {{Year}}</h5>
-            <span class="tooltiptext" id="myTooltip"></span>
-            <button type="button" class="btn" id="btn" (click)="copyText()" (mouseout)="copyMsg()"><i class="fa fa-clone"></i> </button>
+            <span class="tooltiptext text-orange" id="myTooltip"></span>
+            <button type="button" class="btn" id="btn" (click)="copyText()" (mouseout)="copyMsg()"><i
+                    class="fa fa-clone"></i> </button>
         </div>
         <hr *ngIf="formControls['projectName'].dirty" class="col-md-9">
 
@@ -146,44 +144,45 @@
             </div>
 
             <div *ngIf="formControls['projectName'].dirty">
-                <p>Following are the updates for {{ formControls['projectName'].value }} as on {{Date}} {{Month}},
+                <p style="font-size: 18px;">Following are the updates for {{ formControls['projectName'].value }} as on
+                    {{Date}} {{Month}},
                     {{Year}} </p>
             </div>
 
-            <div class="p-3" *ngIf="formControls['completedTask'].dirty">
-                <h5>{{listCompletedTask}}</h5>
+            <div class="p-1" *ngIf="formControls['completedTask'].dirty">
+                <h6 class="fw-bold">{{listCompletedTask}}</h6>
                 <div *ngFor="let content of completedTask.value;let i=index" class="d-flex">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ completedTask.value[i] }} &nbsp; <b> {{ done }}</b>
                 </div>
             </div>
 
-            <div class="p-3" *ngIf="formControls['progressTask'].dirty">
-                <h5>{{listProgressTask}}</h5>
+            <div class="p-1" *ngIf="formControls['progressTask'].dirty">
+                <h6 class="fw-bold">{{listProgressTask}}</h6>
                 <div *ngFor="let content of progressTask.value;let i=index" class="d-flex">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ progressTask.value[i] }}
                 </div>
             </div>
 
-            <div class="p-3" *ngIf="formControls['pendingTask'].dirty">
-                <h5>{{listPendingTask}}</h5>
+            <div class="p-1" *ngIf="formControls['pendingTask'].dirty">
+                <h6 class="fw-bold">{{listPendingTask}}</h6>
                 <div *ngFor="let content of pendingTask.value;let i=index" class="d-flex">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ pendingTask.value[i] }}
                 </div>
             </div>
 
-            <div *ngIf="formControls['queires'].dirty">
-                <h5>{{listQuires}}</h5>
+            <div class="p-1" *ngIf="formControls['queires'].dirty">
+                <h6 class="fw-bold">{{listQuires}}</h6>
                 <div *ngFor="let content of queires.value;let i=index" class="d-flex">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ queires.value[i] }}
                 </div>
             </div>
 
-            <div class="p-3" *ngIf="formControls['notes'].dirty">
-                <h5>{{listNotes}}</h5>
+            <div class="p-1" *ngIf="formControls['notes'].dirty">
+                <h6 class="fw-bold">{{listNotes}}</h6>
                 <div *ngFor="let content of notes.value;let i=index" class="d-flex">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ notes.value[i] }}
@@ -191,9 +190,10 @@
             </div>
 
             <div class="fs-5" *ngIf="formControls['completedTask'].dirty || formControls['projectName'].dirty">
-                {{checkUpdate}}</div>
+                <p style="font-size: 18px;">{{checkUpdate}}</p>
+            </div>
 
-            <div class="fs-5 p-4" *ngIf="formControls['yourName'].dirty">
+            <div class="fs-5 p-2" *ngIf="formControls['yourName'].dirty">
                 {{thanks}}<br>
                 <b>{{ formControls['yourName'].value }}</b>
             </div>
