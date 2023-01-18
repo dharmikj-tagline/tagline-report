@@ -34,8 +34,8 @@ export class TaglineFormComponent implements OnInit {
   Month: string = this.months[this.fullDate.getMonth()];
   Year: string = this.fullDate.getFullYear();
 
-  lblClientName : string = 'Client Name';
-  lblProjectName : string = 'Project Name';
+  lblClientName: string = 'Client Name';
+  lblProjectName: string = 'Project Name';
   listCompletedTask: string = 'List of completed tasks:';
   listProgressTask: string = 'List of Progress tasks:';
   listPendingTask: string = 'List of Pending tasks:';
@@ -45,8 +45,16 @@ export class TaglineFormComponent implements OnInit {
     'Please check with the latest updates and let us know your thoughts for the same.';
   done: string = '[Done]';
   thanks: string = 'Thanks,';
-  err !:string;
+  err!:string;
+  errmsg : string='Please fill this first';
+  completederr!: string;
+  progresserr!: string;
+  pendingerr!: string;
+  queireserr!: string;
+  noteserr!: string;
+
   submitted = false;
+  longStringToCopy!:string;
 
   constructor(private fb: FormBuilder) {}
 
@@ -88,23 +96,27 @@ export class TaglineFormComponent implements OnInit {
   }
 
   addFormControl(formArray: string) {
-    console.log('formArray :>> ', formArray);
     this.submitted = true;
     switch (formArray) {
       case 'completedTask':
         this.completedTask.valid && this.completedTask.push(this.formControl());
+        this.completedTask.invalid && (this.completederr = this.errmsg);
         break;
       case 'progressTask':
         this.progressTask.valid && this.progressTask.push(this.formControl());
+        this.progressTask.invalid && (this.progresserr = this.errmsg);
         break;
       case 'pendingTask':
         this.pendingTask.valid && this.pendingTask.push(this.formControl());
+        this.pendingTask.invalid && (this.pendingerr = this.errmsg);
         break;
       case 'queires':
         this.queires.valid && this.queires.push(this.formControl());
+        this.queires.invalid && (this.queireserr = this.errmsg);
         break;
       case 'notes':
         this.notes.valid && this.notes.push(this.formControl());
+        this.notes.invalid && (this.noteserr = this.errmsg);
         break;
       default:
         break;
@@ -117,5 +129,18 @@ export class TaglineFormComponent implements OnInit {
 
   removeTask(i: number, array: any) {
     array.removeAt(i);
+  }
+
+  copyText(){
+    const text = (document.getElementById('text') as HTMLDivElement).innerText
+    navigator.clipboard.writeText(text);
+    var tooltip = document.getElementById("myTooltip") as HTMLSpanElement;
+    tooltip.innerHTML = "Copied!";
+  }
+
+  copyMsg(){
+    
+      var tooltip = document.getElementById("myTooltip") as HTMLSpanElement;
+      tooltip.innerHTML = "";
   }
 }

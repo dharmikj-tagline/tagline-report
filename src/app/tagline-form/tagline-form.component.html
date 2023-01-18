@@ -3,202 +3,201 @@
 </div>
 
 
-<div class="reportForm">
-    <div class="row">
-        <div class="col-lg-6 p-5">
-            <div class="row fs-5 px-5">
-                <form [formGroup]="reportForm">
+<div class="reportForm row">
+    <div class="col-lg-6 p-5">
+        <div class="row fs-5 ps-5">
+            <form [formGroup]="reportForm" class="px-5">
 
-                    <div class="form-row row mb-3">
-                        <div class="form-group col-md-5">
-                            <label for="inputEmail4 ">{{ lblClientName }}</label>
-                            <input type="text" class="form-control mt-2" mt-2id="inputEmail4"
-                                placeholder="Enter Client Name" formControlName="clientName">
+                <div class="form-row row mb-3">
+                    <div class="form-group col-md-5">
+                        <label for="inputEmail4 " class="fs-6">{{ lblClientName }}</label>
+                        <input type="text" class="form-control mt-2" mt-2id="inputEmail4"
+                            placeholder="Enter Client Name" formControlName="clientName">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="inputPassword4" class="fs-6">{{ lblProjectName }}</label>
+                        <input type="text" class="form-control mt-2" id="inputPassword4"
+                            placeholder="Enter Project Name" formControlName="projectName">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-10 mb-3" formArrayName="completedTask">
+                    <label for="completedTask" class="fs-6"> {{listCompletedTask}}</label>
+                    <div *ngFor="let task of completedTask.controls; let i=index" class="col-12 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" class="form-control me-3 " placeholder="Completed Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeTask(i,completedTask)"
+                                [ngStyle]="{'display': completedTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addFormControl('completedTask')"
+                                [ngStyle]="{'display': completedTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
-                        <div class="form-group col-md-5">
-                            <label for="inputPassword4">{{ lblProjectName }}</label>
-                            <input type="text" class="form-control mt-2" id="inputPassword4"
-                                placeholder="Enter Project Name" formControlName="projectName">
+                        <span class="fs-6 text-danger" *ngIf="formControls['completedTask'].invalid">
+                            {{ completederr}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-10 mb-3" formArrayName="progressTask">
+                    <label for="completedTask" class="fs-6">{{listProgressTask}}</label>
+                    <div *ngFor="let task of progressTask.controls; let i=index" class="col-12 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" class="form-control me-3 " placeholder="Progress Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeTask(i,progressTask)"
+                                [ngStyle]="{'display': progressTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addFormControl('progressTask')"
+                                [ngStyle]="{'display': progressTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+                        <span class="fs-6 text-danger" *ngIf=" formControls['progressTask'].invalid">
+                            {{ progresserr}}
+                        </span>
                     </div>
+                </div>
 
-                    <div class="form-group col-md-10 mb-3" formArrayName="completedTask">
-                        <label for="completedTask"> {{listCompletedTask}}</label>
-                        <div *ngFor="let task of completedTask.controls; let i=index" class=" col-12 mt-2">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control me-3 " placeholder="Completed Tasks"
-                                    [formControlName]="i" minlength="1">
-                                <button type="button" class="btn me-3" (click)="removeTask(i,completedTask)"
-                                    [ngStyle]="{'display': completedTask.controls.length >= 2 ? 'inline' : 'none'}"><i
-                                        class="fa-solid fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn" (click)="addFormControl('completedTask')"
-                                    [ngStyle]="{'display': completedTask.length == 5 ? 'none' : 'inline'}"><i
-                                        class="fa-solid fa-plus"></i></button>
-                            </div>
-                            <span class="fs-6 text-danger" *ngIf="formControls['completedTask'].invalid && submitted">
-                                Please fill this first
-                            </span>
+                <div class="form-group col-md-10 mb-3" formArrayName="pendingTask">
+                    <label for="pendingTask" class="fs-6">{{listPendingTask}}</label>
+                    <div *ngFor="let task of pendingTask.controls; let i=index" class=" col-12 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" class="form-control me-3 " placeholder="Pending Tasks"
+                                [formControlName]="i" minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeTask(i,pendingTask)"
+                                [ngStyle]="{'display': pendingTask.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addFormControl('pendingTask')"
+                                [ngStyle]="{'display': pendingTask.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
+                        <span class="fs-6 text-danger" *ngIf="formControls['pendingTask'].invalid && formControls['pendingTask'].dirty">
+                            {{ pendingerr}}
+                        </span>
                     </div>
+                </div>
 
-
-                    <div class="form-group col-md-10 mb-3" formArrayName="progressTask">
-                        <label for="completedTask">{{listProgressTask}}</label>
-                        <div *ngFor="let task of progressTask.controls; let i=index" class="col-12 mt-2">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control me-3 " placeholder="Progress Tasks"
-                                    [formControlName]="i" minlength="1">
-                                <button type="button" class="btn me-3" (click)="removeTask(i,progressTask)"
-                                    [ngStyle]="{'display': progressTask.controls.length >= 2 ? 'inline' : 'none'}"><i
-                                        class="fa-solid fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn" (click)="addFormControl('progressTask')"
-                                    [ngStyle]="{'display': progressTask.length == 5 ? 'none' : 'inline'}"><i
-                                        class="fa-solid fa-plus"></i></button>
-                            </div>
-                            <span class="fs-6 text-danger" *ngIf=" formControls['progressTask'].invalid && submitted">
-                                Please fill this first
-                            </span>
+                <div class="form-group col-md-10 mb-3" formArrayName="queires">
+                    <label for="queires" class="fs-6">{{listQuires}}</label>
+                    <div *ngFor="let task of queires.controls; let i=index" class="col-12 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" class="form-control me-3 " placeholder="Queries" [formControlName]="i"
+                                minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeTask(i,queires)"
+                                [ngStyle]="{'display': queires.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn" (click)="addFormControl('queires')"
+                                [ngStyle]="{'display': queires.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
-                    </div>
+                        <span class="fs-6 text-danger" *ngIf=" formControls['queires'].invalid">
+                            {{ queireserr}}
+                        </span>
 
-                    <div class="form-group col-md-10 mb-3" formArrayName="pendingTask">
-                        <label for="pendingTask">{{listPendingTask}}</label>
-                        <div *ngFor="let task of pendingTask.controls; let i=index" class=" col-12 mt-2">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control me-3 " placeholder="Pending Tasks"
-                                    [formControlName]="i" minlength="1">
-                                <button type="button" class="btn me-3" (click)="removeTask(i,pendingTask)"
-                                    [ngStyle]="{'display': pendingTask.controls.length >= 2 ? 'inline' : 'none'}"><i
-                                        class="fa-solid fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn" (click)="addFormControl('pendingTask')"
-                                    [ngStyle]="{'display': pendingTask.length == 5 ? 'none' : 'inline'}"><i
-                                        class="fa-solid fa-plus"></i></button>
-                            </div>
-                            <span class="fs-6 text-danger" *ngIf="formControls['pendingTask'].invalid && submitted">
-                                Please fill this first
-                            </span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-10 mb-3" formArrayName="notes">
+                    <label for="notes" class="fs-6">{{listNotes}}</label>
+                    <div *ngFor="let task of notes.controls; let i=index" class="col-12 mt-2">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" class="form-control me-3 " placeholder="Notes" [formControlName]="i"
+                                minlength="1">
+                            <button type="button" class="btn me-3" (click)="removeTask(i,notes)"
+                                [ngStyle]="{'display': notes.controls.length >= 2 ? 'inline' : 'none'}"><i
+                                    class="fa-solid fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn btn" (click)="addFormControl('notes')"
+                                [ngStyle]="{'display': notes.length == 5 ? 'none' : 'inline'}"><i
+                                    class="fa-solid fa-plus"></i></button>
                         </div>
-                    </div>
-
-                    <div class="form-group col-md-10 mb-3" formArrayName="queires">
-                        <label for="queires">{{listQuires}}</label>
-                        <div *ngFor="let task of queires.controls; let i=index" class="col-12 mt-2">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control me-3 " placeholder="Queries"
-                                    [formControlName]="i" minlength="1">
-                                <button type="button" class="btn me-3" (click)="removeTask(i,queires)"
-                                    [ngStyle]="{'display': queires.controls.length >= 2 ? 'inline' : 'none'}"><i
-                                        class="fa-solid fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn" (click)="addFormControl('queires')"
-                                    [ngStyle]="{'display': queires.length == 5 ? 'none' : 'inline'}"><i
-                                        class="fa-solid fa-plus"></i></button>
-                            </div>
-                            <span class="fs-6 text-danger" *ngIf=" formControls['queires'].invalid && submitted">
-                                Please fill this first
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-10 mb-3" formArrayName="notes">
-                        <label for="notes">{{listNotes}}</label>
-                        <div *ngFor="let task of notes.controls; let i=index" class="col-12 mt-2">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control me-3 " placeholder="Notes" [formControlName]="i"
-                                    minlength="1">
-                                <button type="button" class="btn me-3" (click)="removeTask(i,notes)"
-                                    [ngStyle]="{'display': notes.controls.length >= 2 ? 'inline' : 'none'}"><i
-                                        class="fa-solid fa-trash"></i>
-                                </button>
-                                <button type="button" class="btn" (click)="addFormControl('notes')"
-                                    [ngStyle]="{'display': notes.length == 5 ? 'none' : 'inline'}"><i
-                                        class="fa-solid fa-plus"></i></button>
-                            </div>
-                            <span class="fs-6 text-danger" *ngIf="formControls['notes'].invalid && submitted">
-                                Please fill this first
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group col-md-10 mb-2">
-                        <label for="inputAddress">Your Name :</label>
-                        <input type="text" class="form-control me-3 mt-2" id="inputAddress"
-                            placeholder="Enter Client Name" formControlName="yourName">
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="col-lg-6 p-5">
-            <div class="d-flex justify-content-between py-2 col-md-9" *ngIf="formControls['projectName'].dirty">
-                <h5>Updates for as on {{Date}} {{Month}}, {{Year}}</h5>
-                <button type="button" class="btn"><i class="fa fa-clone"></i></button>
-            </div>
-            <hr *ngIf="formControls['projectName'].dirty" class="col-md-9">
-            <div class="row content">
-
-                <div *ngIf="formControls['clientName'].dirty">
-                    <p>Hi, {{ formControls['clientName'].value }}</p>
-                </div>
-
-                <div *ngIf="formControls['projectName'].dirty">
-                    <p>Following are the updates for {{ formControls['projectName'].value }} as on {{Date}} {{Month}},
-                        {{Year}} </p>
-                </div>
-
-                <div class="p-3"  *ngIf="formControls['completedTask'].dirty">
-                    <h5>{{listCompletedTask}}</h5>
-                    <div *ngFor="let content of completedTask.value;let i=index" class="d-flex">
-                        <h5 class="mx-3">{{i+1}}.</h5>
-                        {{ completedTask.value[i] }} &nbsp; <b> {{ done }}</b>
+                        <span class="fs-6 text-danger" *ngIf="formControls['notes'].invalid">
+                            {{ noteserr}}
+                        </span>
                     </div>
                 </div>
 
-                <div class="p-3" *ngIf="formControls['progressTask'].dirty">
-                    <h5>{{listProgressTask}}</h5>
-                    <div *ngFor="let content of progressTask.value;let i=index" class="d-flex">
-                        <h5 class="mx-3">{{i+1}}.</h5>
-                        {{ progressTask.value[i] }}
-                    </div>
+
+                <div class="form-group col-md-10 mb-2">
+                    <label for="inputAddress" class="fs-6">Your Name :</label>
+                    <input type="text" class="form-control me-3 mt-2" id="inputAddress" placeholder="Enter Client Name"
+                        formControlName="yourName">
                 </div>
-
-                <div class="p-3" *ngIf="formControls['pendingTask'].dirty">
-                    <h5>{{listPendingTask}}</h5>
-                    <div *ngFor="let content of pendingTask.value;let i=index" class="d-flex">
-                        <h5 class="mx-3">{{i+1}}.</h5>
-                        {{ pendingTask.value[i] }}
-                    </div>
-                </div>
-
-                <div *ngIf="formControls['queires'].dirty">
-                    <h5>{{listQuires}}</h5>
-                    <div *ngFor="let content of queires.value;let i=index" class="d-flex">
-                        <h5 class="mx-3">{{i+1}}.</h5>
-                        {{ queires.value[i] }}
-                    </div>
-                </div>
-
-                <div class="p-3" *ngIf="formControls['notes'].dirty">
-                    <h5>{{listNotes}}</h5>
-                    <div *ngFor="let content of notes.value;let i=index" class="d-flex">
-                        <h5 class="mx-3">{{i+1}}.</h5>
-                        {{ notes.value[i] }}
-                    </div>
-                </div>
-
-                <div class="fs-5" *ngIf="formControls['completedTask'].dirty || formControls['projectName'].dirty">{{checkUpdate}}</div>
-
-                <div class="fs-5 p-4" *ngIf="formControls['yourName'].dirty">
-                    {{thanks}}<br>
-                    <b>{{ formControls['yourName'].value }}</b>
-                </div>
-
-            </div>
-
+            </form>
         </div>
     </div>
+
+    <div class="col-lg-6 p-5">
+        <div class="d-flex justify-content-between py-2 col-md-9" *ngIf="formControls['projectName'].dirty">
+            <h5>Updates for as on {{Date}} {{Month}}, {{Year}}</h5>
+            <span class="tooltiptext" id="myTooltip"></span>
+            <button type="button" class="btn" id="btn" (click)="copyText()" (mouseout)="copyMsg()"><i class="fa fa-clone"></i> </button>
+        </div>
+        <hr *ngIf="formControls['projectName'].dirty" class="col-md-9">
+
+        <div class="row content col-md-9" id="text">
+            <div *ngIf="formControls['clientName'].dirty">
+                <p>Hi, {{ formControls['clientName'].value }}</p>
+            </div>
+
+            <div *ngIf="formControls['projectName'].dirty">
+                <p>Following are the updates for {{ formControls['projectName'].value }} as on {{Date}} {{Month}},
+                    {{Year}} </p>
+            </div>
+
+            <div class="p-3" *ngIf="formControls['completedTask'].dirty">
+                <h5>{{listCompletedTask}}</h5>
+                <div *ngFor="let content of completedTask.value;let i=index" class="d-flex">
+                    <h5 class="mx-3">{{i+1}}.</h5>
+                    {{ completedTask.value[i] }} &nbsp; <b> {{ done }}</b>
+                </div>
+            </div>
+
+            <div class="p-3" *ngIf="formControls['progressTask'].dirty">
+                <h5>{{listProgressTask}}</h5>
+                <div *ngFor="let content of progressTask.value;let i=index" class="d-flex">
+                    <h5 class="mx-3">{{i+1}}.</h5>
+                    {{ progressTask.value[i] }}
+                </div>
+            </div>
+
+            <div class="p-3" *ngIf="formControls['pendingTask'].dirty">
+                <h5>{{listPendingTask}}</h5>
+                <div *ngFor="let content of pendingTask.value;let i=index" class="d-flex">
+                    <h5 class="mx-3">{{i+1}}.</h5>
+                    {{ pendingTask.value[i] }}
+                </div>
+            </div>
+
+            <div *ngIf="formControls['queires'].dirty">
+                <h5>{{listQuires}}</h5>
+                <div *ngFor="let content of queires.value;let i=index" class="d-flex">
+                    <h5 class="mx-3">{{i+1}}.</h5>
+                    {{ queires.value[i] }}
+                </div>
+            </div>
+
+            <div class="p-3" *ngIf="formControls['notes'].dirty">
+                <h5>{{listNotes}}</h5>
+                <div *ngFor="let content of notes.value;let i=index" class="d-flex">
+                    <h5 class="mx-3">{{i+1}}.</h5>
+                    {{ notes.value[i] }}
+                </div>
+            </div>
+
+            <div class="fs-5" *ngIf="formControls['completedTask'].dirty || formControls['projectName'].dirty">
+                {{checkUpdate}}</div>
+
+            <div class="fs-5 p-4" *ngIf="formControls['yourName'].dirty">
+                {{thanks}}<br>
+                <b>{{ formControls['yourName'].value }}</b>
+            </div>
+        </div>
+    </div>
+
 </div>

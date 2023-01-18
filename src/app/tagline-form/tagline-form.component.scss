@@ -2,6 +2,12 @@
     width: 30%;
     margin: auto;
     border-bottom: 3px solid #DA6427; 
+    @media(max-width: 950px){
+        width: 55%;
+      }
+      @media(max-width: 450px){
+        width: 90%;
+      }
 }
 
 button{
@@ -19,8 +25,9 @@ button:hover{
     font-size: 20px;
 }
 
-button:disabled,
-button[disabled]{
-  background-color: #da63279c;
-  color: white;
+#myTooltip{
+    margin-left: 220px;
+    background: rgba(43, 42, 42, 0.381);
+    height: 25px;
+    border-radius: 20%;
 }
