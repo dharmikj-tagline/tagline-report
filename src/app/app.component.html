@@ -1,0 +1,10 @@
+<h1>App works</h1>
+<app-httpclient></app-httpclient>
+
+<ng-container *ngFor="let data of users">
+    <span>{{ data.id }}</span> &nbsp; &nbsp;
+    <span>{{ data.title}}</span>&nbsp; &nbsp;
+    <span>{{data.path}}</span><br><br>
+</ng-container>
+
+<router-outlet></router-outlet>

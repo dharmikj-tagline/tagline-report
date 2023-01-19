@@ -12,6 +12,9 @@ import { HttpclientComponent } from './httpclient.component';
   imports: [
     CommonModule,
     HttpclientRoutingModule
+  ],
+  exports: [
+    HttpclientComponent
   ]
 })
 export class HttpclientModule { }
