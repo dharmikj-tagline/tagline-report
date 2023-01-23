@@ -7,15 +7,23 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
   postId: any;
+  productsUrl = 'api/products';
+
   constructor(private http: HttpClient) {}
 
-  getPosts(): any {
+  // getProduct() : any{
+  //   return this.http.get(this.productsUrl);
+  // }
+
+  dataGet(): any {
     return this.http.get(environment.apiURL + `users`);
   }
 
   dataPost(user: any): any {
-    const headers = new HttpHeaders().append('Authorization', 'my-auth-token').append('Content-Type', 'application/json');
-    return this.http.post(environment.apiURL + `users`, user, {headers} );
+    // const headers = new HttpHeaders().append('Authorization', 'my-auth-token').append('Content-Type', 'application/json');
+    // return this.http.post(environment.apiURL + `users`, user, {headers} );
+    return this.http.post(environment.apiURL + `users`, user);
+
   }
 
   dataDelete(id: any): any {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { User,Company,Geo,Address } from './common';
 import { ClientService } from './services/client.service';
 
 @Component({
@@ -10,11 +11,12 @@ import { ClientService } from './services/client.service';
 export class AppComponent {
   title = 'tagline-report';
   form!:FormGroup;
+  // products!:any
   userId!:number
-  users: any;
+  users!: any;
 
   constructor(private client: ClientService,private fb:FormBuilder) {
-    this.client.getPosts().subscribe((res: any) => {
+    this.client.dataGet().subscribe((res: any) => {
       console.log('res :>> ', res);
       this.users = res;
       console.log('this.users :>> ', this.users);
@@ -27,25 +29,20 @@ export class AppComponent {
 
     });
 
-    // this.client.dataPost().subscribe((res: any) => {
-    //   this.users.push(res);
-    //   console.log('res :>> ', res);
-    //   this.users.push(this.form.value);
-    //   console.log('this.users :>> ', this.users);
-
-    //   });
-
-    
-    // this.client.postData().subscribe((res: any) => {
-    //   console.log('res :>> ', res);
-    //   this.users.push(res);
-    //   console.log('this.users :>> ', this.users);
-    // });
   }
+
+  // ngOnInit(){
+  //   this.getSoftProduct();
+  // }
+
+  // getSoftProduct(){
+  //   this.client.getProduct().subscribe((res:any)=>{
+  //     console.log('res :>> ', res);
+  //   })
+  // }
 
   saveUser() {
     this.client.dataPost(this.form.value).subscribe((response: any) => {
-      console.log('NAme VAlue :>> ', response.name);
       if(this.userId){
         const index: number = this.users.findIndex(
           (res: any) => res.id === this.userId
@@ -68,7 +65,6 @@ export class AppComponent {
       this.users.push(data);
 
       }
-      
       console.log('this.users Pushed Value :>> ', this.users);
     });
     this.form.reset();
