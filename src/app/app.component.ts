@@ -12,21 +12,29 @@ export class AppComponent {
   title = 'tagline-report';
   form!:FormGroup;
   // products!:any
-  userId!:number
+  private userId!:number
   users!: any;
 
   constructor(private client: ClientService,private fb:FormBuilder) {
     this.client.dataGet().subscribe((res: any) => {
-      console.log('res :>> ', res);
       this.users = res;
       console.log('this.users :>> ', this.users);
+    });
 
-      this.form=this.fb.group({
-        name : [''],
-        username:[''],
-        email : [''],
-      });
-
+    this.form=this.fb.group({
+      name : [''],
+      username:[''],
+      email : [''],
+      address:this.fb.group({
+        street:[''],
+        city:[''],
+        zipcode:['']
+      }),
+      phone:[''],
+      website:[''],
+      company:this.fb.group({
+        cname : ['']
+      })
     });
 
   }
@@ -50,17 +58,13 @@ export class AppComponent {
 
         this.users[index] = {
           id:this.userId,
-          name:response.name,
-          username:response.username,
-          email:response.email,
+          ...response
         };
       }
       else{
         const data={
           id:this.users.length+1,
-          name:response.name,
-          username:response.username,
-          email:response.email,
+          ...response
         }
       this.users.push(data);
 

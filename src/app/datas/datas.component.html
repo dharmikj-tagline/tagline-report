@@ -1,1 +1,15 @@
-<p>datas works!</p>
+<h1 class="fw-bold p-5 text-center">Cards Setion</h1>
+    
+    <div class="d-flex justify-content-around col-sm-12">
+        <div class="card " style="width: 18rem;height: 70vh;" *ngFor="let card of cards">
+            <img class="card-img-top" [src]="card.imageUrl">
+            <div class="card-body">
+                <h5 class="card-title">Id : {{card.id}}</h5>
+                <h5 class="card-title text-primary">Name : {{ card.name}}</h5>
+                <p class="card-text text-secondary">{{card.description}}</p>
+                <p class="card-text">Quantity : {{card.quantity}}</p>
+                <h4>{{card.price}}/-</h4>
+                <a href="#" class="btn btn-primary" (click)="removeCard(card.id)" style="bottom: 10px;position: absolute;">Delete</a>
+            </div>
+        </div>
+    </div>

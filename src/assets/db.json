@@ -1,0 +1,34 @@
+[
+  {
+      "id": 1,
+      "name": "Licensed Frozen Hat",
+      "description": "Incidunt et magni est ut.",
+      "price": "170.00",
+      "imageUrl": "../../assets/44e5-asus-vg27aql1a-1-0-1-550x550.jpeg",
+      "quantity": 56840
+  },
+  {
+      "id": 2,
+      "name": "Rustic Concrete Chicken",
+      "description": "Sint libero mollitia.",
+      "price": "302.00",
+      "imageUrl": "../../assets/7628-5af3-asus-cerberus-geforce-gtx-1050-ti-oc-edition-4gb-gddr5-1-0-1-0-1-250x250.jpeg",
+      "quantity": 9358
+  },
+  {
+      "id": 3,
+      "name": "Fantastic Metal Computer",
+      "description": "In consequuntur cupiditate et unde minus.",
+      "price": "279.00",
+      "imageUrl": "../../assets/9aa5-0226-asus-dual-geforce-rtx-3060-ti-mini-oc-edition-8gb-gddr6-1-0-1-0-1-250x250.jpeg",
+      "quantity": 90316
+  },
+  {
+    "id": 4,
+    "name": "Fantastic Gaming Revenge Computer",
+    "description": "Computer for gaming.",
+    "price": "559.00",
+    "imageUrl": "../../assets/9cd2-675a-asus-mb168b-0-0-1-0-1-250x250.jpeg",
+    "quantity": 4044
+   }
+]

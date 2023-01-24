@@ -15,6 +15,14 @@ export class ClientService {
   //   return this.http.get(this.productsUrl);
   // }
 
+  sendJSON(){
+    return this.http.get('./../../assets/db.json');
+  }
+
+  removeJSON(id:any){
+    return this.http.delete(`./../../assets/db.json/`+id);
+  }
+
   dataGet(): any {
     return this.http.get(environment.apiURL + `users`);
   }

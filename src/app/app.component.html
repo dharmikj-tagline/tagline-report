@@ -1,9 +1,9 @@
 <app-httpclient></app-httpclient>
 
-<h1 class="p-4">Add USer</h1>
+<h1 class="p-4 text-center">Add USer</h1>
 <form class="m-5" [formGroup]="form">
   <div class="row">
-   
+
     <div class="col">
       <label for="" class="fw-bold">Name :</label>
       <input type="text" class="form-control" placeholder="Name" formControlName="name">
@@ -19,7 +19,36 @@
       <label for="" class="fw-bold">Email :</label>
       <input type="email" class="form-control" placeholder="Email" formControlName="email">
     </div>
-   
+    <div class="col">
+      <label for="" class="fw-bold">Phone :</label>
+      <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label for="" class="fw-bold">Website :</label>
+      <input type="email" class="form-control" placeholder="Website" formControlName="website">
+    </div>
+    <div class="col" formGroupName="company">
+      <label for="" class="fw-bold">Company Name :</label>
+      <input type="text" class="form-control" placeholder="Company Name" formControlName="cname">
+    </div>
+  </div>
+
+  <div class="row" formGroupName="address">
+    <div class="col">
+      <label for="" class="fw-bold">Street :</label>
+      <input type="email" class="form-control" placeholder="Street" formControlName="street">
+    </div>
+    <div class="col">
+      <label for="" class="fw-bold">City :</label>
+      <input type="text" class="form-control" placeholder="City" formControlName="city">
+    </div>
+    <div class="col">
+      <label for="" class="fw-bold">Zipcode :</label>
+      <input type="text" class="form-control" placeholder="Zipcode" formControlName="zipcode">
+    </div>
   </div>
 
   <div class="d-flex  justify-content-center m-4 ">
@@ -65,8 +94,8 @@
               <path fill-rule="evenodd"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
             </svg></button></td>
-        <td><button class="btn btn-danger" (click)="deleteRec(i,data)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-              height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+        <td><button class="btn btn-danger" (click)="deleteRec(i,data)"><svg xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
               <path
                 d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
               <path fill-rule="evenodd"
@@ -80,5 +109,7 @@
 <!-- <ng-container *ngFor="let prod of products">
   {{prod.id}},{{prod.name}},{{prod.price}}
 </ng-container> -->
+
+<app-datas></app-datas>
 
 <router-outlet></router-outlet>
