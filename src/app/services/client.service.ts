@@ -8,13 +8,16 @@ import { environment } from 'src/environments/environment';
 export class ClientService {
   postId: any;
   productsUrl = 'api/products';
-
+  liveScore='https://api.cricapi.com/v1/currentMatches?apikey=bffda3db-57ed-4c86-8463-b7c46e700d69&offset=0'
   constructor(private http: HttpClient) {}
 
   // getProduct() : any{
   //   return this.http.get(this.productsUrl);
   // }
 
+  getLiveScore(){
+    return this.http.get(this.liveScore);
+  }
   sendJSON(){
     return this.http.get('./../../assets/db.json');
   }

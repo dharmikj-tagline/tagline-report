@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 import { User,Company,Geo,Address } from './common';
 import { ClientService } from './services/client.service';
 
@@ -12,10 +13,37 @@ export class AppComponent {
   title = 'tagline-report';
   form!:FormGroup;
   // products!:any
+  searchText:any
   private userId!:number
   users!: any;
 
   constructor(private client: ClientService,private fb:FormBuilder) {
+
+    // const myObservable = of(1, 2, 3);
+    // const myObserver = {
+    //   next: (x: number) => console.log('Observer got a next value: ' + x),
+    //   error: (err: Error) => console.error('Observer got an error: ' + err),
+    //   complete: () => console.log('Observer got a complete notification'),
+    // };
+    // myObservable.subscribe(myObserver);
+
+
+    // const vowels = new Observable(observer => {
+    //   const vowels = ['a', 'e', 'i', 'o', 'u'];
+    
+    //   for (let letter of vowels) {
+    //     observer.next(letter);
+    //   }
+    //   observer.complete();
+    // });
+
+    // vowels.subscribe({  
+    //   next: x => console.log('The next vowel is: ', x),  
+    //   error: err => console.error('An error occurred', err),  
+    //   complete: () => console.log('There are no more vowels.')  
+    // });
+
+    
     this.client.dataGet().subscribe((res: any) => {
       this.users = res;
       console.log('this.users :>> ', this.users);

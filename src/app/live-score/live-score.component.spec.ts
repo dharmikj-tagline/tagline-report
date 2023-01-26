@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HttpclientComponent } from './httpclient.component';
+import { LiveScoreComponent } from './live-score.component';
 
-describe('HttpclientComponent', () => {
-  let component: HttpclientComponent;
-  let fixture: ComponentFixture<HttpclientComponent>;
+describe('LiveScoreComponent', () => {
+  let component: LiveScoreComponent;
+  let fixture: ComponentFixture<LiveScoreComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HttpclientComponent ]
+      declarations: [ LiveScoreComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HttpclientComponent);
+    fixture = TestBed.createComponent(LiveScoreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
