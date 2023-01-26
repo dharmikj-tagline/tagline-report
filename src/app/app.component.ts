@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { User, Company, Geo, Address } from './common';
 import { ClientService } from './services/client.service';
@@ -18,7 +19,7 @@ export class AppComponent {
   private userId!: number;
   users!: any;
 
-  constructor(private client: ClientService, private fb: FormBuilder) {
+  constructor(private client: ClientService, private fb: FormBuilder,private toastrService: ToastrService) {
     this.client.dataGet().subscribe((res: any) => {
       this.users = res;
       console.log('this.users :>> ', this.users);
@@ -72,7 +73,7 @@ export class AppComponent {
       }
       this.form.reset();
     }
-    
+    this.toastrService.success('Message Success!', 'Record Done!');
   }
 
   deleteRec(i: any, data: any) {
@@ -80,17 +81,12 @@ export class AppComponent {
       this.users.splice(i, 1);
       console.log('Deleted id :>> ', data.id);
     });
+    this.toastrService.success('Message Success!', 'Record Deleted!');
   }
 
   updateRec(data: any) {
     this.form.patchValue(data);
     this.userId = data.id;
-    // this.client.dataUpdate(data.id).subscribe((response: any) => {
-    //   console.log('update Data :>> ', data);
-    // });
   }
 
-  // public showSuccess(): void {
-  //   this.toastrService.success('Message Success!', 'Title Success!');
-  // }
 }
