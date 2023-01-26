@@ -7,17 +7,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
   postId: any;
-  productsUrl = 'api/products';
-  liveScore='https://api.cricapi.com/v1/currentMatches?apikey=bffda3db-57ed-4c86-8463-b7c46e700d69&offset=0'
   constructor(private http: HttpClient) {}
 
-  // getProduct() : any{
-  //   return this.http.get(this.productsUrl);
-  // }
-
-  getLiveScore(){
-    return this.http.get(this.liveScore);
-  }
+  
   sendJSON(){
     return this.http.get('./../../assets/db.json');
   }
@@ -31,18 +23,15 @@ export class ClientService {
   }
 
   dataPost(user: any): any {
-    // const headers = new HttpHeaders().append('Authorization', 'my-auth-token').append('Content-Type', 'application/json');
-    // return this.http.post(environment.apiURL + `users`, user, {headers} );
     return this.http.post(environment.apiURL + `users`, user);
-
   }
 
   dataDelete(id: any): any {
-    return this.http.delete(environment.apiURL + `users/` + id);
+    return this.http.delete(environment.apiURL + `users/` + Option);
   }
 
-  dataUpdate(id: any): any {
-    return this.http.put(environment.apiURL + `users/` + id, Option);
+  dataUpdate(id: any,data:any): any {
+    return this.http.patch(environment.apiURL + `users`, id);
   }
 
 }

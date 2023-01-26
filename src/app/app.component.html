@@ -1,115 +1,122 @@
-<h1 class="p-4 text-center">Add USer</h1>
-<form class="m-5" [formGroup]="form">
-  <div class="row">
+<div class="row m-3 mt-5">
+  <div class="col-6" style="border:1px solid gray;border-radius: 30px;">
+    <form class="m-5" [formGroup]="form">
+      <h1 class="p-4 text-center text-secondary fw-bold" style="font-style: italic;">Add USer</h1>
 
-    <div class="col">
-      <label for="" class="fw-bold">Name :</label>
-      <input type="text" class="form-control" placeholder="Name" formControlName="name">
-    </div>
-    <div class="col">
-      <label for="" class="fw-bold">Username :</label>
-      <input type="text" class="form-control" placeholder="Username" formControlName="username">
-    </div>
+      <div class="row">
+
+        <div class="col">
+          <label for="" class="fw-bold text-success">Name :</label>
+          <input type="text" class="form-control" placeholder="Name" formControlName="name">
+          <span class="text-danger" *ngIf="formControls['name'].touched && formControls['name'].invalid">Name is
+            Required</span>
+        </div>
+        <div class="col">
+          <label for="" class="fw-bold text-success">Username :</label>
+          <input type="text" class="form-control" placeholder="Username" formControlName="username">
+          <span class="text-danger"
+            *ngIf="formControls['username'].touched && formControls['username'].invalid">Username is Required</span>
+
+        </div>
+      </div>
+
+      <div class="col mt-3">
+        <label for="" class="fw-bold text-success">Email :</label>
+        <input type="email" class="form-control" placeholder="Email" formControlName="email">
+        <span class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">Email is
+          Required</span>
+
+      </div>
+
+      <div class="col mt-3">
+        <label for="" class="fw-bold text-success">Phone :</label>
+        <input type="text" class="form-control" placeholder="Phone" formControlName="phone" minlength="10"
+          maxlength="10">
+        <span class="text-danger" *ngIf="formControls['phone'].touched && formControls['phone'].invalid">Phone No. is
+          Required</span>
+
+      </div>
+
+
+      <div class="col mt-3">
+        <label for="" class="fw-bold text-success">Website :</label>
+        <input type="email" class="form-control" placeholder="Website" formControlName="website">
+        <span class="text-danger" *ngIf="formControls['website'].touched && formControls['website'].invalid">Website is
+          Required</span>
+      </div>
+
+      {{form.status}}
+      <span class="text-center text-danger">{{formerr}}</span>
+      <div class="d-flex justify-content-center m-4 ">
+        <button type="button" class="btn btn-primary me-5" (click)="saveUser()">Submit</button>
+      </div>
+
+    </form>
   </div>
+  <div class="col-6 mt-3">
+    <table class="table table-striped text-center table-sm">
+      <thead class="bg-dark text-white">
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <!-- <th>Street</th>
+          <th>City</th>
+          <th>Zipcode</th> -->
+          <th>Phone</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let data of users;let i = index">
+          <tr>
+            <td>{{ data.name }}</td>
+            <td>{{ data.username }}</td>
+            <td>{{ data.email }}</td>
+            <!-- <td>{{ data.address.street }}</td>
+            <td>{{ data.address.city }}</td>
+            <td>{{ data.address.zipcode }}</td> -->
+            <td>{{ data.phone }}</td>
+            <td><button class="btn btn-primary" (click)="updateRec(data)"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                  <path fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                </svg></button></td>
+            <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg></button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete Record</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body fw-bold text-primary">
+                      Are you Sure want to Delete
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-danger" (click)="deleteRec(i,data)"
+                        data-bs-dismiss="modal">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-  <div class="row">
-    <div class="col">
-      <label for="" class="fw-bold">Email :</label>
-      <input type="email" class="form-control" placeholder="Email" formControlName="email">
-    </div>
-    <div class="col">
-      <label for="" class="fw-bold">Phone :</label>
-      <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
-    </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
-
-  <div class="row">
-    <div class="col">
-      <label for="" class="fw-bold">Website :</label>
-      <input type="email" class="form-control" placeholder="Website" formControlName="website">
-    </div>
-    <div class="col" formGroupName="company">
-      <label for="" class="fw-bold">Company Name :</label>
-      <input type="text" class="form-control" placeholder="Company Name" formControlName="cname">
-    </div>
-  </div>
-
-  <div class="row" formGroupName="address">
-    <div class="col">
-      <label for="" class="fw-bold">Street :</label>
-      <input type="email" class="form-control" placeholder="Street" formControlName="street">
-    </div>
-    <div class="col">
-      <label for="" class="fw-bold">City :</label>
-      <input type="text" class="form-control" placeholder="City" formControlName="city">
-    </div>
-    <div class="col">
-      <label for="" class="fw-bold">Zipcode :</label>
-      <input type="text" class="form-control" placeholder="Zipcode" formControlName="zipcode">
-    </div>
-  </div>
-
-  <div class="d-flex  justify-content-center m-4 ">
-    <button type="button" class="btn btn-primary me-5" (click)="saveUser()">Submit</button>
-    <button class="btn btn-danger">Reset</button>
-  </div>
-
-</form>
-
-<table class="table table-striped text-center">
-  <thead class="bg-dark text-white">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Street</th>
-      <th>City</th>
-      <th>Zipcode</th>
-      <th>Phone</th>
-      <th>Website</th>
-      <th>Company Name</th>
-      <th colspan="2">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let data of users;let i = index" >
-      <tr>
-        <td>{{ data.id }}</td>
-        <td>{{ data.name }}</td>
-        <td>{{ data.username }}</td>
-        <td>{{ data.email }}</td>
-        <td>{{ data.address.street }}</td>
-        <td>{{ data.address.city }}</td>
-        <td>{{ data.address.zipcode }}</td>
-        <td>{{ data.phone }}</td>
-        <td>{{ data.website }}</td>
-        <td>{{ data.company.name }}</td>
-        <td><button class="btn btn-primary" (click)="updateRec(data)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-              height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-              <path fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-            </svg></button></td>
-        <td><button class="btn btn-danger" (click)="deleteRec(i,data)"><svg xmlns="http://www.w3.org/2000/svg"
-              width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-              <path
-                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-              <path fill-rule="evenodd"
-                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-            </svg></button></td>
-      </tr>
-    </ng-container>
-  </tbody>
-</table>
-
-<!-- <ng-container *ngFor="let prod of products">
-  {{prod.id}},{{prod.name}},{{prod.price}}
-</ng-container> -->
-
-<app-datas></app-datas>
-
-<app-live-score></app-live-score>
-
-<router-outlet></router-outlet>
+</div>
+<button class="btn btn-success"></button>

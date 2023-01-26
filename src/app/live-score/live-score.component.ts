@@ -10,10 +10,7 @@ export class LiveScoreComponent implements OnInit {
 
   allscore:any;
   constructor(private client : ClientService) {
-    this.client.getLiveScore().subscribe((score)=>{
-      this.allscore=score;
-      console.log('this.allscore :>> ', this.allscore.data);
-    })
+    
    }
 
   ngOnInit(): void {
