@@ -99,24 +99,49 @@ export class TaglineFormComponent implements OnInit {
   addFormControl(formArray: string) {
     switch (formArray) {
       case 'completedTask':
-        this.completedTask.valid &&  this.completedTask.push(this.formControl());
-        this.completedTask.invalid && (this.completederr = this.errmsg);
+        if(this.completedTask.invalid){
+          this.completederr = this.errmsg
+        }else{
+          this.completederr=''
+          this.completedTask.push(this.formControl());
+        }
         break;
       case 'progressTask':
-        this.progressTask.valid && this.progressTask.push(this.formControl());
-        this.progressTask.invalid && (this.progresserr = this.errmsg);
+        if(this.progressTask.invalid){
+          this.progresserr = this.errmsg
+        }
+        else{
+          this.progresserr=''
+          this.progressTask.push(this.formControl());
+        }
         break;
       case 'pendingTask':
-        this.pendingTask.valid && this.pendingTask.push(this.formControl());
-        this.pendingTask.invalid && (this.pendingerr = this.errmsg);
+        if(this.pendingTask.invalid){
+          this.pendingerr = this.errmsg;
+        }
+        else{
+          this.pendingerr=''
+          this.pendingTask.push(this.formControl());
+        }
         break;
       case 'queires':
-        this.queires.valid && this.queires.push(this.formControl());
-        this.queires.invalid && (this.queireserr = this.errmsg);
+        if(this.queires.invalid){
+          this.queireserr = this.errmsg
+        }
+        else{
+          this.queireserr=''
+          this.queires.push(this.formControl());  
+        }
+        
         break;
       case 'notes':
-        this.notes.valid && this.notes.push(this.formControl());
-        this.notes.invalid && (this.noteserr = this.errmsg);
+        if(this.notes.invalid){
+          this.noteserr = this.errmsg
+        }
+        else{
+          this.noteserr=''
+          this.notes.push(this.formControl());
+        }
         break;
       default:
         break;
