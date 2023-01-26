@@ -150,42 +150,55 @@
             </div>
 
             <div class="p-1" *ngIf="formControls['completedTask'].dirty">
-                <h6 class="fw-bold">{{listCompletedTask}}</h6>
-                <div *ngFor="let content of completedTask.value;let i=index" class="d-flex">
+                <h6 class="fw-bold" [ngStyle]="{ display: completedTask.dirty ? 'block' : 'none'}">{{listCompletedTask}}
+                </h6>
+                <div *ngFor="let content of completedTask.controls;let i=index" class="d-flex">
+                    <ng-container *ngIf="completedTask.dirty && completedTask.controls[i].dirty">
                     <h5 class="mx-3">{{i+1}}.</h5>
                     {{ completedTask.value[i] }} &nbsp; <b> {{ done }}</b>
+                    </ng-container>
                 </div>
             </div>
 
             <div class="p-1" *ngIf="formControls['progressTask'].dirty">
-                <h6 class="fw-bold">{{listProgressTask}}</h6>
-                <div *ngFor="let content of progressTask.value;let i=index" class="d-flex">
+                <h6 class="fw-bold" [ngStyle]="{ display: progressTask.dirty ? 'block' : 'none'}">{{listProgressTask}}
+                </h6>
+                <div *ngFor="let content of progressTask.controls;let i=index" class="d-flex">
+                    <ng-container *ngIf="progressTask.dirty && progressTask.controls[i].dirty">
                     <h5 class="mx-3">{{i+1}}.</h5>
-                    {{ progressTask.value[i] }}
+                    {{ progressTask.value[i] }} <b>{{done}}</b>
+                    </ng-container>
                 </div>
             </div>
 
             <div class="p-1" *ngIf="formControls['pendingTask'].dirty">
-                <h6 class="fw-bold">{{listPendingTask}}</h6>
-                <div *ngFor="let content of pendingTask.value;let i=index" class="d-flex">
+                <h6 class="fw-bold" [ngStyle]="{ display: pendingTask.dirty ? 'block' : 'none'}">{{listPendingTask}}
+                </h6>
+                <div *ngFor="let content of pendingTask.controls;let i=index" class="d-flex">
+                    <ng-container *ngIf="pendingTask.dirty && pendingTask.controls[i].dirty">
                     <h5 class="mx-3">{{i+1}}.</h5>
-                    {{ pendingTask.value[i] }}
+                    {{ pendingTask.value[i] }} <b>{{done}}</b>
+                    </ng-container>
                 </div>
             </div>
 
             <div class="p-1" *ngIf="formControls['queires'].dirty">
-                <h6 class="fw-bold">{{listQuires}}</h6>
-                <div *ngFor="let content of queires.value;let i=index" class="d-flex">
-                    <h5 class="mx-3">{{i+1}}.</h5>
-                    {{ queires.value[i] }}
+                <h6 class="fw-bold" [ngStyle]="{ display: queires.dirty ? 'block' : 'none'}">{{listQuires}}</h6>
+                <div *ngFor="let content of queires.controls;let i=index" class="d-flex">
+                    <ng-container *ngIf="queires.dirty && queires.controls[i].dirty">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ queires.value[i] }} <b>{{done}}</b>
+                    </ng-container>
                 </div>
             </div>
 
             <div class="p-1" *ngIf="formControls['notes'].dirty">
-                <h6 class="fw-bold">{{listNotes}}</h6>
-                <div *ngFor="let content of notes.value;let i=index" class="d-flex">
-                    <h5 class="mx-3">{{i+1}}.</h5>
-                    {{ notes.value[i] }}
+                <h6 class="fw-bold" [ngStyle]="{ display: notes.dirty ? 'block' : 'none'}">{{listNotes}}</h6>
+                <div *ngFor="let content of notes.controls;let i=index" class="d-flex">
+                    <ng-container *ngIf="notes.dirty && notes.controls[i].dirty">
+                        <h5 class="mx-3">{{i+1}}.</h5>
+                        {{ notes.value[i] }} <b>{{done}}</b>
+                    </ng-container>
                 </div>
             </div>
 
