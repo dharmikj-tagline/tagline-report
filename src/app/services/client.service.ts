@@ -31,8 +31,8 @@ export class ClientService {
     return this.http.delete(environment.apiURL + `users/` + Option);
   }
 
-  dataUpdate(id:any):  Observable<any> {
-    return this.http.put(environment.apiURL + `users/`,id);
+  dataUpdate(user:any):  Observable<any> {
+    return this.http.put(environment.apiURL + `users/`+ user.id , user);
   }
 
 }

@@ -27,7 +27,7 @@
 
       <div class="col mt-3">
         <label for="" class="fw-bold labels">{{lblPhone}}</label>
-        <input type="text" class="form-control" placeholder="Phone" formControlName="phone" pattern="^[0-9]+$">
+        <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
         <span class="text-danger" *ngIf="formControls['phone'].touched && formControls['phone'].invalid || (submitted && formControls['phone'].invalid)">{{errPhone}}</span>
       </div>
 

@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User, Company, Geo, Address } from './common';
 import { ClientService } from './services/client.service';
 
@@ -12,33 +14,33 @@ import { ClientService } from './services/client.service';
 })
 export class AppComponent {
   title = 'tagline-report';
-  lblAddUser:string='Add USer'
-  lblUserData:string='User Data'
-  lblName:string='Name :'
-  lblUsername:string='Username :'
-  lblEmail:string='Email :'
-  lblPhone:string='Phone :'
-  lblWebsite:string='Website :'
+  lblAddUser: string = 'Add USer';
+  lblUserData: string = 'User Data';
+  lblName: string = 'Name :';
+  lblUsername: string = 'Username :';
+  lblEmail: string = 'Email :';
+  lblPhone: string = 'Phone :';
+  lblWebsite: string = 'Website :';
 
-  errName:string='Name is Required'
-  errUsername:string='Username is Required'
-  errEmail:string='Email is Required'
-  errPhone:string='Phone is Required'
-  errWebsite:string='Website is Required'
-
+  errName: string = 'Name is Required';
+  errUsername: string = 'Username is Required';
+  errEmail: string = 'Email is Required';
+  errPhone: string = 'Phone is Required';
+  errWebsite: string = 'Website is Required';
 
   form!: FormGroup;
-  submitted:boolean=false
+  submitted: boolean = false;
   searchText: any;
   private userId!: number;
   users!: any;
 
-  btnSubmit:string='Submit'
+  btnSubmit: string = 'Submit';
 
   constructor(
     private client: ClientService,
     private fb: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private httpClient: HttpClient
   ) {
     this.getData();
 
@@ -55,7 +57,7 @@ export class AppComponent {
     return this.form.controls;
   }
 
-  getData(){
+  getData() {
     this.client.dataGet().subscribe((res: any) => {
       this.users = res;
       console.log('this.users :>> ', this.users);
@@ -64,13 +66,12 @@ export class AppComponent {
 
   saveUser() {
     if (this.form.invalid) {
-      this.submitted=true
+      this.submitted = true;
       return;
     } else {
-      this.submitted=false;
-      this.btnSubmit='Submit'
+      this.submitted = false;
+      this.btnSubmit = 'Submit';
       if (this.userId) {
-        
         const index: number = this.users.findIndex(
           (res: any) => res.id === this.userId
         );
@@ -80,7 +81,8 @@ export class AppComponent {
           ...this.form.value,
         };
 
-        this.client.dataPost(data).subscribe((res: any) => {
+        this.client.dataUpdate(data).subscribe((res: any) => {
+          console.log('Update with PUT data :>> ', data);
           this.users[index] = {
             ...res,
           };
@@ -108,7 +110,7 @@ export class AppComponent {
   }
 
   updateRec(data: any) {
-    this.btnSubmit='Update'
+    this.btnSubmit = 'Update';
     this.form.patchValue(data);
     this.userId = data.id;
   }
