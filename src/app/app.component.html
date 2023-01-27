@@ -1,70 +1,63 @@
 <div class="row m-3 mt-5">
-  <div class="col-6" style="border:1px solid gray;border-radius: 30px;">
+  <div class="col-6 formDiv">
     <form class="m-5" [formGroup]="form">
-      <h1 class="p-4 text-center text-secondary fw-bold" style="font-style: italic;">Add USer</h1>
+      <h1 class="addUserHead" style="font-style: italic;">{{lblAddUser}}</h1>
 
       <div class="row">
 
-        <div class="col">
-          <label for="" class="fw-bold text-success">Name :</label>
+        <div class="col first" >
+          <label for="" class="fw-bold labels">{{lblName}}</label>
           <input type="text" class="form-control" placeholder="Name" formControlName="name">
-          <span class="text-danger" *ngIf="formControls['name'].touched && formControls['name'].invalid">Name is
-            Required</span>
+          <span class="text-danger" *ngIf="(formControls['name'].touched && formControls['name'].invalid) || (submitted && formControls['name'].invalid)">{{errName}}</span>
         </div>
-        <div class="col">
-          <label for="" class="fw-bold text-success">Username :</label>
+        <div class="col first">
+          <label for="" class="fw-bold labels">{{lblUsername}}</label>
           <input type="text" class="form-control" placeholder="Username" formControlName="username">
           <span class="text-danger"
-            *ngIf="formControls['username'].touched && formControls['username'].invalid">Username is Required</span>
+            *ngIf="formControls['username'].touched && formControls['username'].invalid || (submitted && formControls['username'].invalid)">{{errUsername}}</span>
 
         </div>
       </div>
 
       <div class="col mt-3">
-        <label for="" class="fw-bold text-success">Email :</label>
-        <input type="email" class="form-control" placeholder="Email" formControlName="email">
-        <span class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid">Email is
-          Required</span>
-
+        <label for="" class="fw-bold labels">{{lblEmail}}</label>
+        <input type="email" class="form-control" placeholder="Email" formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <span class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid || (submitted && formControls['email'].invalid)">{{errEmail}}</span>
       </div>
 
       <div class="col mt-3">
-        <label for="" class="fw-bold text-success">Phone :</label>
-        <input type="text" class="form-control" placeholder="Phone" formControlName="phone" minlength="10"
-          maxlength="10">
-        <span class="text-danger" *ngIf="formControls['phone'].touched && formControls['phone'].invalid">Phone No. is
-          Required</span>
-
+        <label for="" class="fw-bold labels">{{lblPhone}}</label>
+        <input type="text" class="form-control" placeholder="Phone" formControlName="phone" pattern="^[0-9]+$">
+        <span class="text-danger" *ngIf="formControls['phone'].touched && formControls['phone'].invalid || (submitted && formControls['phone'].invalid)">{{errPhone}}</span>
       </div>
 
 
       <div class="col mt-3">
-        <label for="" class="fw-bold text-success">Website :</label>
+        <label for="" class="fw-bold labels">{{lblWebsite}}</label>
         <input type="email" class="form-control" placeholder="Website" formControlName="website">
-        <span class="text-danger" *ngIf="formControls['website'].touched && formControls['website'].invalid">Website is
-          Required</span>
+        <span class="text-danger" *ngIf="formControls['website'].touched && formControls['website'].invalid || (submitted && formControls['website'].invalid)">{{errWebsite}}</span>
       </div>
 
-      {{form.status}}
-      <span class="text-center text-danger">{{formerr}}</span>
+      
       <div class="d-flex justify-content-center m-4 ">
-        <button type="button" class="btn btn-primary me-5" (click)="saveUser()">Submit</button>
+        <button type="button" class="btn btn-primary me-5 col-4" (click)="saveUser()">{{btnSubmit}}</button>
       </div>
+      <span>Form Status :{{form.status}}</span>
 
     </form>
   </div>
   <div class="col-6 mt-3">
     <table class="table table-striped text-center table-sm">
-      <thead class="bg-dark text-white">
-        <tr>
-          <th>Name</th>
+      <thead >
+        <tr class="">
+          <td colspan="7"><h1 class="tableDataHead text-center">{{lblUserData}}</h1></td>
+        </tr>
+        <tr class="tblhead bg-dark text-white">
+          <th class="firsthead">Name</th>
           <th>Username</th>
           <th>Email</th>
-          <!-- <th>Street</th>
-          <th>City</th>
-          <th>Zipcode</th> -->
           <th>Phone</th>
-          <th colspan="2">Action</th>
+          <th colspan="2" class="lasthead">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -73,9 +66,6 @@
             <td>{{ data.name }}</td>
             <td>{{ data.username }}</td>
             <td>{{ data.email }}</td>
-            <!-- <td>{{ data.address.street }}</td>
-            <td>{{ data.address.city }}</td>
-            <td>{{ data.address.zipcode }}</td> -->
             <td>{{ data.phone }}</td>
             <td><button class="btn btn-primary" (click)="updateRec(data)"><svg xmlns="http://www.w3.org/2000/svg"
                   width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -92,6 +82,7 @@
                   <path fill-rule="evenodd"
                     d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                 </svg></button>
+
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -101,7 +92,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body fw-bold text-primary">
-                      Are you Sure want to Delete
+                      Are you Sure you want to Delete this Record
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -113,6 +104,7 @@
               </div>
 
             </td>
+            
           </tr>
         </ng-container>
       </tbody>

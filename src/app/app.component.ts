@@ -12,18 +12,35 @@ import { ClientService } from './services/client.service';
 })
 export class AppComponent {
   title = 'tagline-report';
+  lblAddUser:string='Add USer'
+  lblUserData:string='User Data'
+  lblName:string='Name :'
+  lblUsername:string='Username :'
+  lblEmail:string='Email :'
+  lblPhone:string='Phone :'
+  lblWebsite:string='Website :'
+
+  errName:string='Name is Required'
+  errUsername:string='Username is Required'
+  errEmail:string='Email is Required'
+  errPhone:string='Phone is Required'
+  errWebsite:string='Website is Required'
+
+
   form!: FormGroup;
-  formerr!: string;
-  // products!:any
+  submitted:boolean=false
   searchText: any;
   private userId!: number;
   users!: any;
 
-  constructor(private client: ClientService, private fb: FormBuilder,private toastrService: ToastrService) {
-    this.client.dataGet().subscribe((res: any) => {
-      this.users = res;
-      console.log('this.users :>> ', this.users);
-    });
+  btnSubmit:string='Submit'
+
+  constructor(
+    private client: ClientService,
+    private fb: FormBuilder,
+    private toastrService: ToastrService
+  ) {
+    this.getData();
 
     this.form = this.fb.group({
       name: ['', Validators.required],
@@ -34,18 +51,26 @@ export class AppComponent {
     });
   }
 
-
   get formControls() {
     return this.form.controls;
   }
 
+  getData(){
+    this.client.dataGet().subscribe((res: any) => {
+      this.users = res;
+      console.log('this.users :>> ', this.users);
+    });
+  }
+
   saveUser() {
     if (this.form.invalid) {
-      this.formerr = 'Please fill the form Correctly';
+      this.submitted=true
       return;
-    } 
-    else {
+    } else {
+      this.submitted=false;
+      this.btnSubmit='Submit'
       if (this.userId) {
+        
         const index: number = this.users.findIndex(
           (res: any) => res.id === this.userId
         );
@@ -54,39 +79,37 @@ export class AppComponent {
           id: this.userId,
           ...this.form.value,
         };
-  
-        this.client.dataPost(data).subscribe((res:any)=>{
-         console.log('data :>> ', data);
-          this.users[index]= {
-            ...res
+
+        this.client.dataPost(data).subscribe((res: any) => {
+          this.users[index] = {
+            ...res,
           };
-        })
+        });
+        this.toastrService.info('Record has been Updated', ' Updated!');
       } else {
         const data = {
           id: this.users.length + 1,
           ...this.form.value,
         };
-        this.client.dataPost(data).subscribe((res:any)=>{
-          console.log('Data Post Calles :>> ');
+        this.client.dataPost(data).subscribe((res: any) => {
           this.users.push(res);
-        })
+        });
+        this.toastrService.success('Record has been Created!', 'Created');
       }
       this.form.reset();
     }
-    this.toastrService.success('Message Success!', 'Record Done!');
   }
 
   deleteRec(i: any, data: any) {
     this.client.dataDelete(i).subscribe((response: any) => {
       this.users.splice(i, 1);
-      console.log('Deleted id :>> ', data.id);
     });
-    this.toastrService.success('Message Success!', 'Record Deleted!');
+    this.toastrService.error('Record has been deleted!', 'Deleted!');
   }
 
   updateRec(data: any) {
+    this.btnSubmit='Update'
     this.form.patchValue(data);
     this.userId = data.id;
   }
-
 }
