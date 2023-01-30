@@ -10,13 +10,12 @@ export class ClientService {
   postId: any;
   constructor(private http: HttpClient) {}
 
-  
-  sendJSON(){
+  sendJSON(): Observable<any> {
     return this.http.get('./../../assets/db.json');
   }
 
-  removeJSON(id:any){
-    return this.http.delete(`./../../assets/db.json/`+id);
+  removeJSON(id: any): Observable<any> {
+    return this.http.delete(`./../../assets/db.json/` + id);
   }
 
   dataGet(): Observable<any> {
@@ -27,12 +26,11 @@ export class ClientService {
     return this.http.post(environment.apiURL + `users`, user);
   }
 
-  dataDelete(id: any):  Observable<any> {
-    return this.http.delete(environment.apiURL + `users/` + Option);
+  dataDelete(id: any): Observable<any> {
+    return this.http.delete(environment.apiURL + `users/` + id);
   }
 
-  dataUpdate(user:any):  Observable<any> {
-    return this.http.put(environment.apiURL + `users/`+ user.id , user);
+  dataUpdate(user: any): Observable<any> {
+    return this.http.put(environment.apiURL + `users/` + user.id, user);
   }
-
 }

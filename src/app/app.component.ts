@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { User, Company, Geo, Address } from './common';
+import { map, Observable } from 'rxjs';
+import { User } from './common';
 import { ClientService } from './services/client.service';
 
+// { "id": 1, "name": "Leanne Graham", "username": "Bret", "email": "Sincere@april.biz", "address": { "street": "Kulas Light", "suite": "Apt. 556", "city": "Gwenborough", "zipcode": "92998-3874", "geo": { "lat": "-37.3159", "lng": "81.1496" } }, "phone": "1-770-736-8031 x56442", "website": "hildegard.org", "company": { "name": "Romaguera-Crona", "catchPhrase": "Multi-layered client-server neural-net", "bs": "harness real-time e-markets" } }
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,10 +30,10 @@ export class AppComponent {
 
   form!: FormGroup;
   submitted: boolean = false;
-  searchText: any;
   private userId!: number;
-  users!: any;
-
+  deleteId!: number;
+  users!: User[];
+  userObservable:User[]=[];
   btnSubmit: string = 'Submit';
 
   constructor(
@@ -43,7 +43,10 @@ export class AppComponent {
     private httpClient: HttpClient
   ) {
     this.getData();
+    this.formLoad();
+  }
 
+  formLoad(){
     this.form = this.fb.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -58,11 +61,21 @@ export class AppComponent {
   }
 
   getData() {
-    this.client.dataGet().subscribe((res: any) => {
+    this.client.dataGet().subscribe((res : any)=>{
       this.users = res;
-      console.log('this.users :>> ', this.users);
-    });
+
+      let observeData=Observable.create((observe:any)=>{
+        observe.next(this.users);
+        observe.complete()
+      })
+      observeData.subscribe((res:any)=>{
+        console.log('New res :>> ', res);
+        this.userObservable=res
+      })
+    })
+
   }
+  
 
   saveUser() {
     if (this.form.invalid) {
@@ -82,7 +95,6 @@ export class AppComponent {
         };
 
         this.client.dataUpdate(data).subscribe((res: any) => {
-          console.log('Update with PUT data :>> ', data);
           this.users[index] = {
             ...res,
           };
@@ -102,14 +114,18 @@ export class AppComponent {
     }
   }
 
-  deleteRec(i: any, data: any) {
-    this.client.dataDelete(i).subscribe((response: any) => {
-      this.users.splice(i, 1);
+  deleteFind(i: number) {
+    this.deleteId = i;
+  }
+
+  deleteRec() {
+    this.client.dataDelete(this.deleteId).subscribe((response: any) => {
+      this.users.splice(this.deleteId, 1);
     });
     this.toastrService.error('Record has been deleted!', 'Deleted!');
   }
 
-  updateRec(data: any) {
+  updateRec(data: User) {
     this.btnSubmit = 'Update';
     this.form.patchValue(data);
     this.userId = data.id;
