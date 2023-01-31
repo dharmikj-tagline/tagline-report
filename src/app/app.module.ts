@@ -11,6 +11,7 @@ import { ProductDetailComponent } from './shared/component/product-detail/produc
 import { ToastrModule } from 'ngx-toastr';
 import { CrudApiComponent } from './shared/component/crud-api/crud-api.component';
 import { AccessInterceptor } from './shared/interceptor/access.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AccessInterceptor } from './shared/interceptor/access.interceptor';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       closeButton: true,
       progressBar: true,

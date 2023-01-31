@@ -29,6 +29,9 @@
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/ball-spin-fade-rotating.css",
+              "node_modules/ngx-spinner/animations/ball-zig-zag-deflect.css",
+              "node_modules/ngx-spinner/animations/pacman.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],

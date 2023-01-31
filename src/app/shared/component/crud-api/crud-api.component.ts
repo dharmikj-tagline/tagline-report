@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { User } from 'src/app/common';
 import { ClientService } from 'src/app/services/client.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-crud-api',
@@ -40,13 +41,19 @@ export class CrudApiComponent implements OnInit {
     private client: ClientService,
     private fb: FormBuilder,
     private toastrService: ToastrService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private spinner: NgxSpinnerService
   ) {
     this.getData();
   }
 
   ngOnInit(){
     this.formLoad()
+    this.spinner.show();
+  
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
   }
 
   formLoad(){
