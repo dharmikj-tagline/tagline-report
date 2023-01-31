@@ -6,7 +6,6 @@ import { map, Observable } from 'rxjs';
 import { User } from './common';
 import { ClientService } from './services/client.service';
 
-// { "id": 1, "name": "Leanne Graham", "username": "Bret", "email": "Sincere@april.biz", "address": { "street": "Kulas Light", "suite": "Apt. 556", "city": "Gwenborough", "zipcode": "92998-3874", "geo": { "lat": "-37.3159", "lng": "81.1496" } }, "phone": "1-770-736-8031 x56442", "website": "hildegard.org", "company": { "name": "Romaguera-Crona", "catchPhrase": "Multi-layered client-server neural-net", "bs": "harness real-time e-markets" } }
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +13,7 @@ import { ClientService } from './services/client.service';
 })
 export class AppComponent {
   title = 'tagline-report';
+
   lblAddUser: string = 'Add USer';
   lblUserData: string = 'User Data';
   lblName: string = 'Name :';
@@ -21,6 +21,7 @@ export class AppComponent {
   lblEmail: string = 'Email :';
   lblPhone: string = 'Phone :';
   lblWebsite: string = 'Website :';
+  btnSubmit: string = 'Submit';
 
   errName: string = 'Name is Required';
   errUsername: string = 'Username is Required';
@@ -33,8 +34,7 @@ export class AppComponent {
   private userId!: number;
   deleteId!: number;
   users!: User[];
-  userObservable:User[]=[];
-  btnSubmit: string = 'Submit';
+  userObservable!:User[];
 
   constructor(
     private client: ClientService,
@@ -43,7 +43,10 @@ export class AppComponent {
     private httpClient: HttpClient
   ) {
     this.getData();
-    this.formLoad();
+  }
+
+  ngOnInit(){
+    this.formLoad()
   }
 
   formLoad(){
@@ -61,12 +64,13 @@ export class AppComponent {
   }
 
   getData() {
-    this.client.dataGet().subscribe((res : any)=>{
+    this.client.dataGet().subscribe((res : User[])=>{
       this.users = res;
 
-      let observeData=Observable.create((observe:any)=>{
+      let observeData=new Observable((observe:any)=>{
         observe.next(this.users);
         observe.complete()
+        return {unsubscribe() {}};
       })
       observeData.subscribe((res:any)=>{
         console.log('New res :>> ', res);
@@ -94,7 +98,7 @@ export class AppComponent {
           ...this.form.value,
         };
 
-        this.client.dataUpdate(data).subscribe((res: any) => {
+        this.client.dataUpdate(data).subscribe((res: User) => {
           this.users[index] = {
             ...res,
           };
@@ -105,7 +109,7 @@ export class AppComponent {
           id: this.users.length + 1,
           ...this.form.value,
         };
-        this.client.dataPost(data).subscribe((res: any) => {
+        this.client.dataPost(data).subscribe((res: User) => {
           this.users.push(res);
         });
         this.toastrService.success('Record has been Created!', 'Created');
@@ -119,7 +123,7 @@ export class AppComponent {
   }
 
   deleteRec() {
-    this.client.dataDelete(this.deleteId).subscribe((response: any) => {
+    this.client.dataDelete(this.deleteId).subscribe((response: User) => {
       this.users.splice(this.deleteId, 1);
     });
     this.toastrService.error('Record has been deleted!', 'Deleted!');

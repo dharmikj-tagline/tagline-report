@@ -21,7 +21,7 @@
 
       <div class="col mt-3">
         <label for="" class="fw-bold labels">{{lblEmail}}</label>
-        <input type="email" class="form-control" placeholder="Email" formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+        <input type="email" class="form-control" placeholder="Email" formControlName="email" pattern="^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
         <span class="text-danger" *ngIf="formControls['email'].touched && formControls['email'].invalid || (submitted && formControls['email'].invalid)">{{errEmail}}</span>
       </div>
 
